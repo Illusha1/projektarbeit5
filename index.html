@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet"> 
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-areas:
+          "header"
+          "main"
+          "footer";
+        grid-template-rows: 100px 1fr 100px; /* Höhe des Headers und Footers anpassen */
+        height: 100vh;
+      }
+
+      .header {
+        grid-area: header;
+        background-color: #333;
+        color: white;
+        padding: 1rem;
+      }
+
+      .main-content {
+        grid-area: main;
+        padding: 1rem;
+        height: 100%;
+        grid-auto-rows: 1fr
+      }
+
+      .inner-grid {
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+        margin-left: 100px;
+        gap: 2rem;
+        height: 10%;
+      }
+
+      .content-area {
+        background-color: #f0f0f0;
+        padding: 1rem;
+      }
+
+      .footer {
+        grid-area: footer;
+        background-color: #333;
+        color: white;
+        padding: 1rem;
+      }
+      		/* !!Gestaltung "Hamburger Menu"!! */
+		
+		/* Dadurch wird die Checkbox ausgeblendet */
+		#menu__toggle {
+				opacity: 0;
+				}
+				
+		/* Die Striche vom Menü werden beim Klicken gedreht*/ 		
+		#menu__toggle:checked + .menu__btn > span {
+				transform: rotate(45deg);
+				}
+				
+		/*
+		Der obere und untere Strich drehen sich und überlagern den mittleren,
+		so dass nur noch ein Strich nach dem klicken zu sehen ist.
+		*/		
+		#menu__toggle:checked + .menu__btn > span::before {
+				top: 0;
+				transform: rotate(Odeg);
+				}
+		#menu__toggle:checked + .menu__btn > span::after {
+				top: 0;
+				transform: rotate(90deq);
+				}
+				
+		/* Beim klicken der Checkbox wird das Menü rausgefahren */		
+		#menu__toggle:checked ~ .menu__box {
+				left: 0 !important;
+				}
+		
+		/* Positionierung des Buttons und die Größe */
+		.menu__btn {
+				position: fixed;
+				top: 20px;
+				left: 20px;
+				width: 26px;
+				height: 26px;
+				cursor: pointer;
+				z-index: 2;
+				}
+		
+		/* Gestaltung des Buttons */
+		.menu__btn > span,
+		.menu__btn > span::before,
+		.menu__btn > span::after {
+				display: block;
+				position: absolute;
+				width: 100%;
+				height: 2px;
+				background-color:#616161;
+				transition-duration:.25s;
+		}
+
+		/* Oberer und Unterer Strich beim Menü (Die drei Striche) */
+		.menu__btn > span::before {
+			content:"";
+			top: -8px;
+			}
+		.menu__btn > span::after {
+			content:"";
+			top: 8px;
+			}
+			
+		/* #
+		"Quasi" der Umschlag für den Menüinhalt, welcher weiter oben
+		nach Links ausgeblendet wird und erst beim klicken eingeblendet wird.
+		*/	
+		.menu__box {
+			display: block;
+			position: fixed;
+			top: 0;
+			left: -100%;
+			width: 200px;
+			height: 100%;
+			margin: 0;
+			padding: 80px 0;
+			list-style: none;
+			background-color:#ECEFF1;
+			box-shadow: 2px 2px 6px rgba(0, 0, 0, .4);
+			transition-duration:.25s;
+            z-index: 1
+			}
+		
+		/* Gestaltung der einzelnen Menüpunkte */
+		.menu__item {
+			display: block;
+			padding: 12px 24px;
+			color: #333;
+			font-size: 20px;
+			font-weight: 600;
+			text-decoration: none;
+			transition-duration:.25s;
+			}
+			
+		/* Hintergrundfarbe vom Menüpunkt beim Hover */	
+		.menu__item:hover {
+			background-color: olive;
+			}
+			
+		/* !!Gestaltung tippender Text!! */	
+		
+		.umschlag {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		.tippen {
+			width: 29ch; /* Anzahl der Zeichen inkl. Leerzeichen */
+			animation: typing 2s steps(50), blink .5s step-end infinite alternate;
+			white-space: nowrap;
+			overflow: hidden; /* Damit der Text erstmal "Unsichtbar" ist */
+			border-right: 3px solid;
+			font-family: monospace;
+			font-size: 2em;
+		}
+		
+		@keyframes typing {
+		 from {
+		 	width: 0;
+		 }
+		}
+		@keyframes blink {
+		50% {
+			border-color: transparent;
+		}
+		}
+		
+		/* DIV damit der Text mittig mittig vom Browser angezeigt wird*/
+		#bereich2 {
+			position: relative;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 100%;
+			text-align: center;
+			color: white;
+            justify-content: center;
+		}
+		
+		/* Gestaltung der Schrift inkl. des Schattens*/
+		#bereich2 span {
+			font-size: 15vw;
+			font-weight: 500;
+			text-shadow: -0.08em 0.03em 0.12em rgba(0, 0, 0, 0.9);
+		}
+		
+		/* 
+		Um die Buchstaben nach links zu versetzen für die Überlappung.
+		Außer dem ersten Buchstaben, deshalb not :first-child
+		*/
+		div span:not(:first-child) {
+			margin-left: -0.23em;
+		}
+			
+#bereich3 div {
+			position: relative;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 100%;
+			text-align: center;
+			color: white;
+		}
+	
+.versteckt {
+	display: inline;
+	color: #cccccc;
+	background-image: linear-gradient(#cccccc, #cccccc);
+	background-repeat: no-repeat;
+	background-position: right;
+	background-size: 100% 100%;
+	transition: background-size 100ms, color 700ms;
+	font-size: 5vw;
+	font-weight: 800;
+}
+
+.versteckt:hover {
+	background-size: 0% 100%;
+	color: #121212;
+}
+
+.tipp {
+	color: #121212;
+}
+.umschlag1{
+            position: relative; /* relativen Positionierungs-Kontext für die figcaption erstellen */
+            width: 450px; /* Breite des Umschlags */
+            height: 250px; /* Höhe des Umschlags */
+            overflow: hidden; 
+            /* 
+            hidden; damit beim "Vergrößern", der Bereich
+            der dazukommt, ausgeblendet wird */
+        }
+
+        .bild-container{
+            width: 100%; height: 100%; /* Breite und Höhe des Bildcontainers */
+            transition: transform 400ms;
+            /* 
+            Mit der CSS-Eigenschaft transition legen wir fest,
+            welcher Übergangseffekt für die Änderung genutzt werden soll.
+            Da wir es skalieren wollen, legen wir als Eigenschaft
+            bei transition das transform fest.
+            400ms ist die Dauer der Übergangseffekte und sie wird in Millisekunden angegeben.
+            */
+        }
+
+        .bild-container img{
+            width: 100%; height: 100%; /* Breite und Höhe des Bildes */
+        }
+
+        .umschlag1:hover .bild-container{
+            transform: scale(120%);
+            /*
+            Mit dem scale definieren wir, welche tatsächliche Skalierung
+            beim Hover-Event :hover genutzt werden soll. In unserem Beispiel
+            120% Vergrößerung, wenn die Maus übers Bild geht.
+            Die Änderung würde 400ms brauchen.
+            */
+        }
+
+        figcaption {
+            position: absolute; /* Die Bildbeschreibung wird absolute innerhalb des Umschlags (relative) gesetzt */ 
+            bottom: 0; /* mit bottom und left 0 bekommen wir es in die untere linke Ecke */
+            left: 0;
+            color: rgb(0, 0, 0); /* Schriftfarbe für die Bildbeschreibung */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.75));
+            width: 100%;
+            padding: 10px;
+            padding-top: 50%;
+            opacity: 0; /* Hier wird die Deckkraft zunächst auf 0 gesetzt damit der Hintergrund ausgeblendet wird */
+            transition: opacity 400ms; /* Füge einen Übergangseffekt für die Opazität hinzu */
+        }
+
+        /* Wenn über das umschlag-Element gefahren wird, ändere die Opazität der figcaption auf 1 */
+        .umschlag1:hover figcaption {
+            opacity: 1;
+        }
+
+        #eins{
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        #zwei{
+            font-family: 'Homemade Apple', cursive;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="grid-container">
+      <header class="header"></header>
+      <main class="main-content">
+        <div class="inner-grid">
+          <div class="content-area"> <div class="hamburger-menu">
+
+            <input id="menu__toggle" type="checkbox" />
+                <label class="menu__btn" for="menu__toggle">
+                    <span></span>
+                </label>
+            <ul class="menu__box">
+                <li><a class="menu__item" href="#">Nach oben</a></li>
+                <li><a class="menu__item" href="#bereich2">Beispiel 3</a></li>
+                <li><a class="menu__item" href="#bereich3">Beispiel 4</a></li>
+                <li><a class="menu__item" href="#bereich4">Beispiel 5</a></li>
+                <li><a class="menu__item" href="#bereich5">Beispiel 6</a></li>
+            </ul>
+       </div>
+        
+        <div class="umschlag">
+            <div class="tippen">
+                Ist das ein Beispieltext? Nö!
+            </div>
+        </div>
+    
+    </div>
+          <div class="content-area" id="bereich2">
+            <div>
+                <span>W</span>
+                <span>I</span>
+                <span>R</span>
+                <span> </span>
+                <span>L</span>
+                <span>E</span>
+                <span>R</span>
+                <span>N</span>
+                <span>E</span>
+                <span>N</span>
+            </div>
+        </body>
+          </div>
+          <div class="content-area" id="bereich3"> 
+            <div>
+            <p class="versteckt">
+                Warum hast du es getan?<br>
+                Hast du nicht gelesen?<br>
+                Doch du hast?!<br>
+                Warum nur?   
+            </p>
+                <p class="tipp">Gebe mit dem Mauszeiger nicht über die Balken!</p>
+        </div>
+        </div>
+        <div class="content-area"id="bereich4">    <h1>Beispiel 5</h1>
+
+            <figure class="umschlag1">
+                <div class="bild-container">
+                    <img src="./Bausteinprüfung/10.jpg" alt="Taucherpärchen im Meer">
+                </div>
+                <figcaption>Ein Mann schaut in die Ferne</figcaption>
+            </figure></div>
+            <div class="content-area" id="bereich5"><h1>Beispiel 6</h1>
+
+                <p id="eins">Das ist ein Satz ?</p>
+            
+                <p id="zwei">Ist das ein Satz?</p>
+
+               </div>
+        </div>
+      </main>
+      <footer class="footer">Was ist Footer?</footer>
+    </div>
+  </body>
+</html>
